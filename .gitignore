@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build output
+dist/
+build/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Testing
+coverage/
+htmlcov/
+.pytest_cache/
+.coverage
+
+# Docker
+postgres_data/
+
+# Claude
+CLAUDE.local.md
+.claude/
+
+# Logs
+*.log
