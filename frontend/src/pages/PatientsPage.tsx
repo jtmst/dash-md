@@ -98,6 +98,7 @@ export default function PatientsPage() {
       {/* Filters */}
       <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
         <TextField
+          aria-label="Search patients"
           placeholder="Search patients..."
           size="small"
           value={searchInput}
@@ -118,6 +119,7 @@ export default function PatientsPage() {
           sx={{ minWidth: 280 }}
         />
         <Select
+          aria-label="Filter by status"
           value={statusFilter}
           onChange={handleStatusChange}
           size="small"
@@ -157,7 +159,7 @@ export default function PatientsPage() {
               <CircularProgress />
             </Box>
           ) : data && data.items.length > 0 ? (
-            <Table>
+            <Table aria-label="Patient list">
               <TableHead>
                 <TableRow>
                   <TableCell>
@@ -204,6 +206,7 @@ export default function PatientsPage() {
                   <TableRow
                     key={patient.id}
                     hover
+                    aria-label={`${patient.last_name}, ${patient.first_name}`}
                     sx={{ cursor: 'pointer' }}
                     onClick={() => navigate(`/patients/${patient.id}`)}
                   >
@@ -222,6 +225,7 @@ export default function PatientsPage() {
                     <TableCell>{formatDate(patient.last_visit_date)}</TableCell>
                     <TableCell>
                       <Button
+                        aria-label={`View ${patient.last_name}, ${patient.first_name}`}
                         size="small"
                         startIcon={<VisibilityIcon />}
                         onClick={(e) => {
