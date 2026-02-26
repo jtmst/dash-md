@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
@@ -7,12 +8,20 @@ import {
   CardContent,
   Chip,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   Typography,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { usePatient } from '../hooks/usePatients.ts';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useDeletePatient, usePatient } from '../hooks/usePatients.ts';
 import { calculateAge, formatDate } from '../utils/format.ts';
+import { parseApiError } from '../utils/errors.ts';
 import type { Patient } from '../types/index.ts';
 import { isAxiosError } from 'axios';
 
@@ -131,6 +140,9 @@ export default function PatientDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: patient, isLoading, isError, error, refetch } = usePatient(id);
+  const deleteMutation = useDeletePatient();
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const isNotFound = isError && isAxiosError(error) &&
     (error.response?.status === 404 || error.response?.status === 422);
@@ -186,7 +198,7 @@ export default function PatientDetailPage() {
         Back to Patients
       </Button>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, flexWrap: 'wrap' }}>
         <Typography variant="h4">
           {patient.first_name} {patient.last_name}
         </Typography>
@@ -195,7 +207,64 @@ export default function PatientDetailPage() {
           color={STATUS_COLORS[patient.status]}
           sx={{ textTransform: 'capitalize' }}
         />
+        <Box sx={{ ml: 'auto', display: 'flex', gap: 1 }}>
+          <Button
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={() => navigate(`/patients/${patient.id}/edit`)}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={() => setDeleteOpen(true)}
+          >
+            Delete
+          </Button>
+        </Box>
       </Box>
+
+      {deleteError && (
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setDeleteError(null)}>
+          {deleteError}
+        </Alert>
+      )}
+
+      <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>
+        <DialogTitle>Delete Patient</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete {patient.first_name} {patient.last_name}? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteOpen(false)} disabled={deleteMutation.isPending}>
+            Cancel
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            disabled={deleteMutation.isPending}
+            startIcon={deleteMutation.isPending ? <CircularProgress size={20} /> : undefined}
+            onClick={() => {
+              setDeleteError(null);
+              deleteMutation.mutate(patient.id, {
+                onSuccess: () => {
+                  navigate('/patients');
+                },
+                onError: (err) => {
+                  setDeleteOpen(false);
+                  setDeleteError(parseApiError(err));
+                },
+              });
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>

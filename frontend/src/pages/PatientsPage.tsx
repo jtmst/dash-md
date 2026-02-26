@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AddIcon from '@mui/icons-material/Add';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { usePatients } from '../hooks/usePatients.ts';
 import { formatDate } from '../utils/format.ts';
@@ -91,9 +92,16 @@ export default function PatientsPage() {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Patients
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+        <Typography variant="h4">Patients</Typography>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => navigate('/patients/new')}
+        >
+          New Patient
+        </Button>
+      </Box>
 
       {/* Filters */}
       <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>

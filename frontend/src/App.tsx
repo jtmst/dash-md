@@ -6,6 +6,8 @@ import DashboardLayout from './layouts/DashboardLayout';
 import DashboardPage from './pages/DashboardPage';
 import PatientsPage from './pages/PatientsPage';
 import PatientDetailPage from './pages/PatientDetailPage';
+import PatientCreatePage from './pages/PatientCreatePage';
+import PatientEditPage from './pages/PatientEditPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 const queryClient = new QueryClient({
@@ -27,7 +29,9 @@ function App() {
             <Route element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
               <Route path="patients" element={<PatientsPage />} />
+              <Route path="patients/new" element={<PatientCreatePage />} />
               <Route path="patients/:id" element={<PatientDetailPage />} />
+              <Route path="patients/:id/edit" element={<PatientEditPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
