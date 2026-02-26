@@ -414,6 +414,174 @@ SEED_NOTES = [
         "content": "Fall risk assessment completed. High risk identified due to Parkinson's gait instability and orthostatic hypotension. Home safety evaluation recommended. Adjusted antihypertensive timing to reduce orthostatic episodes.",
         "timestamp": datetime(2025, 12, 8, 11, 30, tzinfo=timezone.utc),
     },
+    # James Okafor — asthma
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000017"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e02"),
+        "content": "Routine asthma follow-up. Patient using rescue inhaler about twice weekly. Lung sounds clear. Continued fluticasone 110mcg BID.",
+        "timestamp": datetime(2026, 1, 28, 14, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000018"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e02"),
+        "content": "Patient called about increased wheezing during cold weather. Advised pre-treatment with albuterol before outdoor activity and to keep rescue inhaler accessible.",
+        "timestamp": datetime(2025, 11, 14, 9, 30, tzinfo=timezone.utc),
+    },
+    # Fatima Al-Rashid — well visit
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000019"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e05"),
+        "content": "Annual physical. All vitals within normal limits. CBC and metabolic panel unremarkable. Flu vaccine administered. No new concerns.",
+        "timestamp": datetime(2025, 12, 15, 10, 0, tzinfo=timezone.utc),
+    },
+    # William Thompson — diabetes / peripheral neuropathy
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000020"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e06"),
+        "content": "Diabetes follow-up. HbA1c improved to 6.9% from 7.4%. Patient reports good adherence to metformin and dietary changes.",
+        "timestamp": datetime(2026, 2, 18, 13, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000021"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e06"),
+        "content": "Patient reports worsening tingling and numbness in both feet. Monofilament test shows reduced sensation. Started gabapentin 300mg at bedtime.",
+        "timestamp": datetime(2026, 1, 6, 10, 15, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000022"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e06"),
+        "content": "Reviewed home glucose log. Fasting readings averaging 118 mg/dL. Emphasized importance of daily foot inspection given neuropathy diagnosis.",
+        "timestamp": datetime(2025, 10, 22, 14, 0, tzinfo=timezone.utc),
+    },
+    # Yuki Tanaka — anxiety
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000023"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e07"),
+        "content": "Patient reports increased anxiety related to work stress. GAD-7 score 14, moderate severity. Discussed CBT techniques and adjusted sertraline from 50mg to 75mg.",
+        "timestamp": datetime(2026, 1, 10, 15, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000024"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e07"),
+        "content": "Follow-up on medication adjustment. GAD-7 improved to 9. Tolerating sertraline 75mg well, no side effects. Continuing therapy referral.",
+        "timestamp": datetime(2025, 11, 5, 16, 0, tzinfo=timezone.utc),
+    },
+    # David Kim — osteoarthritis / BPH (inactive)
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000025"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0a"),
+        "content": "Patient reports bilateral knee pain worse with stairs. X-ray shows moderate joint space narrowing. Recommended physical therapy and trial of topical diclofenac.",
+        "timestamp": datetime(2025, 8, 20, 11, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000026"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0a"),
+        "content": "Urology follow-up for BPH. PSA stable at 2.1. Tamsulosin providing adequate symptom relief. No changes to current management.",
+        "timestamp": datetime(2025, 6, 12, 9, 45, tzinfo=timezone.utc),
+    },
+    # Aisha Mohammed — well visit
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000027"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0b"),
+        "content": "Routine visit. Patient in good health, no acute complaints. Reviewed peanut allergy action plan and confirmed EpiPen is not expired.",
+        "timestamp": datetime(2026, 2, 1, 10, 30, tzinfo=timezone.utc),
+    },
+    # Lin Wei — iron deficiency anemia
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000028"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0d"),
+        "content": "Labs show hemoglobin 10.2, ferritin 8. Started ferrous sulfate 325mg daily with vitamin C. Will recheck CBC in 8 weeks.",
+        "timestamp": datetime(2026, 1, 22, 14, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000029"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0d"),
+        "content": "Patient reports fatigue and occasional dizziness. Pale conjunctivae on exam. Iron studies ordered to evaluate suspected anemia.",
+        "timestamp": datetime(2025, 12, 10, 11, 0, tzinfo=timezone.utc),
+    },
+    # Thomas Williams — COPD / diabetes / glaucoma
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000030"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0e"),
+        "content": "COPD stable on current inhalers. SpO2 94% on room air. Spirometry unchanged from last visit. Continue tiotropium and albuterol PRN.",
+        "timestamp": datetime(2026, 2, 12, 9, 15, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000031"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0e"),
+        "content": "HbA1c 7.8%, up from 7.1%. Patient admits to holiday dietary indiscretion. Reinforced carbohydrate counting. Added glipizide 5mg daily.",
+        "timestamp": datetime(2026, 1, 15, 10, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000032"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0e"),
+        "content": "Ophthalmology report received. Intraocular pressures 18/19 mmHg on latanoprost. Visual fields stable. Continue current glaucoma drops.",
+        "timestamp": datetime(2025, 11, 28, 14, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000033"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0e"),
+        "content": "Flu and pneumococcal vaccines administered. Reviewed all medications for interactions. No changes needed.",
+        "timestamp": datetime(2025, 10, 5, 9, 0, tzinfo=timezone.utc),
+    },
+    # Sofia Morales — migraine / fibromyalgia
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000034"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0f"),
+        "content": "Migraine frequency reduced to 2-3 per month on topiramate 50mg. Patient rates current control as acceptable. Continuing current regimen.",
+        "timestamp": datetime(2026, 2, 8, 16, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000035"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0f"),
+        "content": "Fibromyalgia flare with widespread pain and poor sleep. Tender point exam positive at 14/18 sites. Added duloxetine 30mg at bedtime.",
+        "timestamp": datetime(2025, 12, 20, 11, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000036"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0f"),
+        "content": "Patient reports improvement in sleep and overall pain since starting duloxetine. Encouraged regular low-impact exercise and stress management.",
+        "timestamp": datetime(2026, 1, 18, 15, 0, tzinfo=timezone.utc),
+    },
+    # Andre Baptiste — sickle cell trait (inactive)
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000037"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e10"),
+        "content": "Annual check-in. Sickle cell trait, asymptomatic. Counseled on hydration during exercise and high-altitude precautions. No lab abnormalities.",
+        "timestamp": datetime(2025, 6, 30, 10, 0, tzinfo=timezone.utc),
+    },
+    # Elena Volkov — RA / osteoporosis
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000038"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e11"),
+        "content": "Rheumatology follow-up. Joint swelling improved on methotrexate 15mg weekly. CRP normalized at 0.4. Tolerating folic acid supplementation well.",
+        "timestamp": datetime(2026, 2, 15, 11, 45, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000039"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e11"),
+        "content": "DEXA scan results: T-score -2.7 at lumbar spine. Started alendronate 70mg weekly with calcium and vitamin D supplementation.",
+        "timestamp": datetime(2025, 12, 1, 10, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000040"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e11"),
+        "content": "Patient reports morning stiffness lasting about 45 minutes. Hands and wrists most affected. Methotrexate labs stable, LFTs normal.",
+        "timestamp": datetime(2026, 1, 8, 13, 30, tzinfo=timezone.utc),
+    },
+    # Daniel Nguyen — asthma / eczema
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000041"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e12"),
+        "content": "Asthma well controlled on low-dose fluticasone. No ER visits or missed school. Eczema limited to antecubital fossae, managing with moisturizer and triamcinolone PRN.",
+        "timestamp": datetime(2026, 1, 5, 13, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000042"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e12"),
+        "content": "Eczema flare on forearms and behind knees. Prescribed hydrocortisone 2.5% cream and reviewed trigger avoidance. Allergy testing up to date.",
+        "timestamp": datetime(2025, 9, 18, 14, 30, tzinfo=timezone.utc),
+    },
 ]
 
 

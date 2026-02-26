@@ -86,7 +86,12 @@ export default function DashboardLayout() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" noWrap>
+          <Typography
+            variant="h6"
+            noWrap
+            onClick={() => navigate('/')}
+            sx={{ cursor: 'pointer' }}
+          >
             Dash MD
           </Typography>
         </Toolbar>

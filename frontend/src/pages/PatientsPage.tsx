@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Alert,
   Box,
@@ -21,11 +21,12 @@ import {
   TableSortLabel,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { usePatients } from '../hooks/usePatients.ts';
 import { formatDate } from '../utils/format.ts';
 import type { PatientListParams, PatientStatus, SortableColumn } from '../types/index.ts';
@@ -49,9 +50,15 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 
 export default function PatientsPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [searchInput, setSearchInput] = useState('');
-  const [statusFilter, setStatusFilter] = useState<PatientStatus | 'all'>('all');
+  const [statusFilter, setStatusFilter] = useState<PatientStatus | 'all'>(() => {
+    const s = searchParams.get('status');
+    return s === 'active' || s === 'inactive' || s === 'critical' ? s : 'all';
+  });
   const [sortBy, setSortBy] = useState<SortableColumn>('last_name');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(0);
@@ -96,10 +103,10 @@ export default function PatientsPage() {
         <Typography variant="h4">Patients</Typography>
         <Button
           variant="contained"
-          startIcon={<AddIcon />}
+          startIcon={isMobile ? undefined : <AddIcon />}
           onClick={() => navigate('/patients/new')}
         >
-          New Patient
+          {isMobile ? <AddIcon /> : 'New Patient'}
         </Button>
       </Box>
 
@@ -124,7 +131,7 @@ export default function PatientsPage() {
             },
             htmlInput: { maxLength: 200 },
           }}
-          sx={{ minWidth: 280 }}
+          sx={{ minWidth: { xs: 0, sm: 280 }, flex: { xs: 1, sm: 'none' } }}
         />
         <Select
           aria-label="Filter by status"
@@ -179,15 +186,17 @@ export default function PatientsPage() {
                       Name
                     </TableSortLabel>
                   </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={sortBy === 'date_of_birth'}
-                      direction={sortBy === 'date_of_birth' ? sortOrder : 'asc'}
-                      onClick={() => handleSort('date_of_birth')}
-                    >
-                      Date of Birth
-                    </TableSortLabel>
-                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      <TableSortLabel
+                        active={sortBy === 'date_of_birth'}
+                        direction={sortBy === 'date_of_birth' ? sortOrder : 'asc'}
+                        onClick={() => handleSort('date_of_birth')}
+                      >
+                        Date of Birth
+                      </TableSortLabel>
+                    </TableCell>
+                  )}
                   <TableCell>
                     <TableSortLabel
                       active={sortBy === 'status'}
@@ -206,7 +215,6 @@ export default function PatientsPage() {
                       Last Visit
                     </TableSortLabel>
                   </TableCell>
-                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -221,7 +229,9 @@ export default function PatientsPage() {
                     <TableCell>
                       {patient.last_name}, {patient.first_name}
                     </TableCell>
-                    <TableCell>{formatDate(patient.date_of_birth)}</TableCell>
+                    {!isMobile && (
+                      <TableCell>{formatDate(patient.date_of_birth)}</TableCell>
+                    )}
                     <TableCell>
                       <Chip
                         label={patient.status}
@@ -231,19 +241,6 @@ export default function PatientsPage() {
                       />
                     </TableCell>
                     <TableCell>{formatDate(patient.last_visit_date)}</TableCell>
-                    <TableCell>
-                      <Button
-                        aria-label={`View ${patient.last_name}, ${patient.first_name}`}
-                        size="small"
-                        startIcon={<VisibilityIcon />}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/patients/${patient.id}`);
-                        }}
-                      >
-                        View
-                      </Button>
-                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
