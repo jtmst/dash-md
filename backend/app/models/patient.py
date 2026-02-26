@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from sqlalchemy import Date, DateTime, String, func
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
@@ -40,3 +40,5 @@ class Patient(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now()
     )
+
+    notes = relationship("Note", back_populates="patient", cascade="all, delete-orphan")

@@ -6,14 +6,16 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import async_session
+from app.routers.notes import router as notes_router
 from app.routers.patients import router as patients_router
-from app.seed import seed_patients
+from app.seed import seed_notes, seed_patients
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     async with async_session() as db:
         await seed_patients(db)
+        await seed_notes(db)
         await db.commit()
     yield
 
@@ -38,6 +40,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 
 app.include_router(patients_router)
+app.include_router(notes_router)
 
 
 @app.get("/api/health")

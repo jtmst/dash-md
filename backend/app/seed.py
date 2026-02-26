@@ -4,6 +4,7 @@ from datetime import date, datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.models.note import Note
 from app.models.patient import Patient
 
 SEED_PATIENTS = [
@@ -310,6 +311,112 @@ SEED_PATIENTS = [
 ]
 
 
+SEED_NOTES = [
+    # Maria Santos — hypertension / diabetes management
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000001"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e01"),
+        "content": "Patient presents with elevated blood pressure at 158/94. Adjusted lisinopril dosage from 10mg to 20mg daily. Recommended low-sodium diet and follow-up in 2 weeks.",
+        "timestamp": datetime(2026, 2, 10, 9, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000002"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e01"),
+        "content": "Follow-up visit. Blood pressure improved to 138/86. HbA1c at 7.2%, slightly above target. Continuing current medication regimen. Referred to nutritionist.",
+        "timestamp": datetime(2026, 1, 15, 10, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000003"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e01"),
+        "content": "Annual wellness visit. Comprehensive metabolic panel ordered. Patient reports improved adherence to medication schedule. Foot exam normal, no signs of neuropathy.",
+        "timestamp": datetime(2025, 12, 5, 9, 0, tzinfo=timezone.utc),
+    },
+    # Priya Patel — COPD management
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000004"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e03"),
+        "content": "Patient presents with acute exacerbation of COPD. SpO2 at 89% on room air. Administered nebulizer treatment in office. Prescribed prednisone taper and azithromycin. Advised to use supplemental oxygen as needed.",
+        "timestamp": datetime(2026, 2, 20, 11, 15, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000005"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e03"),
+        "content": "Pulmonary function test results reviewed. FEV1 at 52% predicted, consistent with moderate COPD. Tiotropium inhaler added to regimen. Smoking cessation counseling provided.",
+        "timestamp": datetime(2026, 1, 8, 14, 30, tzinfo=timezone.utc),
+    },
+    # Robert Chen — cardiac care
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000006"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e04"),
+        "content": "Routine cardiology follow-up. ECG shows normal sinus rhythm. Lipid panel: LDL 98 mg/dL, improved from previous 124 mg/dL. Continuing atorvastatin 40mg. Encouraged regular walking program.",
+        "timestamp": datetime(2026, 2, 5, 8, 45, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000007"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e04"),
+        "content": "Stress test completed. No significant ST changes. Exercise tolerance adequate for age. Continue current medical management. Follow-up echocardiogram in 6 months.",
+        "timestamp": datetime(2025, 11, 20, 10, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000008"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e04"),
+        "content": "Patient called reporting occasional chest tightness during exertion. Advised sublingual nitroglycerin as needed. Moved follow-up appointment to next week. If symptoms worsen, instructed to go to ER.",
+        "timestamp": datetime(2025, 11, 5, 15, 30, tzinfo=timezone.utc),
+    },
+    # Carlos Rivera — CKD management
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000009"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e08"),
+        "content": "Nephrology follow-up. eGFR declined to 28 mL/min, stage 4 CKD. Potassium elevated at 5.4 mEq/L. Adjusted dietary restrictions. Started sodium polystyrene sulfonate. Discussed dialysis planning.",
+        "timestamp": datetime(2026, 2, 22, 9, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000010"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e08"),
+        "content": "Blood pressure poorly controlled at 162/98 despite three-drug regimen. Added amlodipine 5mg. Renal ultrasound ordered to rule out renal artery stenosis. Labs in 2 weeks.",
+        "timestamp": datetime(2026, 1, 18, 11, 0, tzinfo=timezone.utc),
+    },
+    # Michael O'Brien — cardiac care (AFib, CHF)
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000011"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0c"),
+        "content": "Patient presents with increased lower extremity edema and 5 lb weight gain over 1 week. BNP elevated at 890 pg/mL. Increased furosemide dose. Strict fluid restriction advised. Recheck in 3 days.",
+        "timestamp": datetime(2026, 2, 23, 8, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000012"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0c"),
+        "content": "INR check for warfarin management. Result: 2.4, within therapeutic range. Atrial fibrillation rate controlled at 72 bpm. Continue current warfarin dose. Next INR in 4 weeks.",
+        "timestamp": datetime(2026, 2, 2, 9, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000013"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e0c"),
+        "content": "Echocardiogram results: LVEF 35%, moderate mitral regurgitation, left atrial enlargement. Discussed prognosis and advance care planning. Patient to consider cardiology referral for device evaluation.",
+        "timestamp": datetime(2025, 12, 15, 14, 0, tzinfo=timezone.utc),
+    },
+    # Patrick Murphy — Parkinson's / chronic pain
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000014"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e14"),
+        "content": "Neurology follow-up. Tremor has progressed to bilateral upper extremities. Gait increasingly shuffled. Increased carbidopa-levodopa to 25/100 TID. Physical therapy referral for balance training.",
+        "timestamp": datetime(2026, 2, 21, 8, 30, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000015"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e14"),
+        "content": "Pain management review. Patient reports chronic lower back pain at 6/10. Current regimen of acetaminophen and gabapentin provides partial relief. Discussed non-pharmacologic options. Ordered lumbar spine MRI.",
+        "timestamp": datetime(2026, 1, 10, 10, 0, tzinfo=timezone.utc),
+    },
+    {
+        "id": uuid.UUID("c1b2a3d4-e5f6-7890-abcd-100000000016"),
+        "patient_id": uuid.UUID("b0a3e426-1d3a-4b0e-9b0a-1a2b3c4d5e14"),
+        "content": "Fall risk assessment completed. High risk identified due to Parkinson's gait instability and orthostatic hypotension. Home safety evaluation recommended. Adjusted antihypertensive timing to reduce orthostatic episodes.",
+        "timestamp": datetime(2025, 12, 8, 11, 30, tzinfo=timezone.utc),
+    },
+]
+
+
 async def seed_patients(db: AsyncSession) -> None:
     result = await db.execute(select(Patient).limit(1))
     if result.scalars().first() is not None:
@@ -317,3 +424,12 @@ async def seed_patients(db: AsyncSession) -> None:
 
     for data in SEED_PATIENTS:
         db.add(Patient(**data))
+
+
+async def seed_notes(db: AsyncSession) -> None:
+    result = await db.execute(select(Note).limit(1))
+    if result.scalars().first() is not None:
+        return
+
+    for data in SEED_NOTES:
+        db.add(Note(**data))
