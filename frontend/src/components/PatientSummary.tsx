@@ -1,4 +1,13 @@
-import { Alert, Box, Button, Card, CardContent, Chip, CircularProgress, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import { usePatientSummary } from '../hooks/useSummary.ts';
 
 export default function PatientSummary({ patientId }: { patientId: string }) {

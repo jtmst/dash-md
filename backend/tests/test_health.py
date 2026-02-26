@@ -1,0 +1,9 @@
+async def test_health_check(client):
+    response = await client.get("/api/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
+async def test_request_id_header(client):
+    response = await client.get("/api/health")
+    assert "x-request-id" in response.headers

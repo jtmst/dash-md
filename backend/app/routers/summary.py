@@ -19,9 +19,7 @@ async def get_patient_summary(patient_id: UUID, db: AsyncSession = Depends(get_d
     if patient is None:
         raise HTTPException(status_code=404, detail="Patient not found")
 
-    notes_result = await db.execute(
-        select(Note).where(Note.patient_id == patient_id)
-    )
+    notes_result = await db.execute(select(Note).where(Note.patient_id == patient_id))
     notes = list(notes_result.scalars().all())
 
     return await generate_summary(patient, notes)

@@ -38,14 +38,12 @@ const STATUS_COLORS = {
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
     <Box sx={{ display: 'flex', py: 0.75 }}>
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        sx={{ width: 120, flexShrink: 0 }}
-      >
+      <Typography variant="body2" color="text.secondary" sx={{ width: 120, flexShrink: 0 }}>
         {label}
       </Typography>
-      <Typography variant="body2" sx={{ overflowWrap: 'anywhere' }}>{value}</Typography>
+      <Typography variant="body2" sx={{ overflowWrap: 'anywhere' }}>
+        {value}
+      </Typography>
     </Box>
   );
 }
@@ -69,9 +67,10 @@ function ChipList({ items, emptyText }: { items: string[]; emptyText: string }) 
 
 function PersonalInfoCard({ patient }: { patient: Patient }) {
   const age = calculateAge(patient.date_of_birth);
-  const dobDisplay = age !== null
-    ? `${formatDate(patient.date_of_birth)} (${age} years old)`
-    : formatDate(patient.date_of_birth);
+  const dobDisplay =
+    age !== null
+      ? `${formatDate(patient.date_of_birth)} (${age} years old)`
+      : formatDate(patient.date_of_birth);
   return (
     <Card variant="outlined">
       <CardContent>
@@ -97,21 +96,13 @@ function MedicalInfoCard({ patient }: { patient: Patient }) {
         </Typography>
         <InfoRow label="Blood Type" value={patient.blood_type ?? 'Not on file'} />
         <Box sx={{ py: 0.75 }}>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 0.5 }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
             Allergies
           </Typography>
           <ChipList items={patient.allergies} emptyText="None recorded" />
         </Box>
         <Box sx={{ py: 0.75 }}>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 0.5 }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
             Conditions
           </Typography>
           <ChipList items={patient.conditions} emptyText="None recorded" />
@@ -131,7 +122,9 @@ function RecordInfoCard({ patient }: { patient: Patient }) {
         <InfoRow label="Patient ID" value={patient.id} />
         <InfoRow
           label="Last Visit"
-          value={patient.last_visit_date ? formatDate(patient.last_visit_date) : 'No visits recorded'}
+          value={
+            patient.last_visit_date ? formatDate(patient.last_visit_date) : 'No visits recorded'
+          }
         />
         <InfoRow label="Created" value={formatDate(patient.created_at)} />
         <InfoRow label="Last Updated" value={formatDate(patient.updated_at)} />
@@ -148,7 +141,9 @@ export default function PatientDetailPage() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const isNotFound = isError && isAxiosError(error) &&
+  const isNotFound =
+    isError &&
+    isAxiosError(error) &&
     (error.response?.status === 404 || error.response?.status === 422);
 
   if (isLoading) {
@@ -194,11 +189,7 @@ export default function PatientDetailPage() {
 
   return (
     <>
-      <Button
-        startIcon={<ArrowBackIcon />}
-        onClick={() => navigate('/patients')}
-        sx={{ mb: 2 }}
-      >
+      <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/patients')} sx={{ mb: 2 }}>
         Back to Patients
       </Button>
 
@@ -240,7 +231,8 @@ export default function PatientDetailPage() {
         <DialogTitle>Delete Patient</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete {patient.first_name} {patient.last_name}? This action cannot be undone.
+            Are you sure you want to delete {patient.first_name} {patient.last_name}? This action
+            cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

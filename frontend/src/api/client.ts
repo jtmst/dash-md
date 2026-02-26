@@ -1,5 +1,13 @@
 import axios from 'axios';
-import type { Note, NoteFormData, PaginatedResponse, Patient, PatientFormData, PatientListParams, PatientSummary } from '../types/index.ts';
+import type {
+  Note,
+  NoteFormData,
+  PaginatedResponse,
+  Patient,
+  PatientFormData,
+  PatientListParams,
+  PatientSummary,
+} from '../types/index.ts';
 
 const client = axios.create({
   baseURL: '/api',

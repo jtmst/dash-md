@@ -1,5 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createPatient, deletePatient, getPatient, getPatients, updatePatient } from '../api/client.ts';
+import {
+  createPatient,
+  deletePatient,
+  getPatient,
+  getPatients,
+  updatePatient,
+} from '../api/client.ts';
 import type { PatientFormData, PatientListParams } from '../types/index.ts';
 
 export function usePatients(params: PatientListParams) {

@@ -58,7 +58,9 @@ def generate_template_summary(patient: Patient, notes: list[Note]) -> str:
         medical += " No known allergies are documented."
 
     if patient.last_visit_date:
-        visit = f" The most recent visit was on {_format_date(patient.last_visit_date)}."
+        visit = (
+            f" The most recent visit was on {_format_date(patient.last_visit_date)}."
+        )
     else:
         visit = " No visit date is recorded."
 
@@ -70,9 +72,13 @@ def generate_template_summary(patient: Patient, notes: list[Note]) -> str:
         note_lines = []
         for note in recent:
             note_date = _format_date(note.timestamp)
-            content = note.content if len(note.content) <= 200 else note.content[:200] + "..."
+            content = (
+                note.content if len(note.content) <= 200 else note.content[:200] + "..."
+            )
             note_lines.append(f" On {note_date}: {content}")
-        notes_section = "\n\nRecent notes:" + "".join(f"\n{line}" for line in note_lines)
+        notes_section = "\n\nRecent notes:" + "".join(
+            f"\n{line}" for line in note_lines
+        )
         older_count = len(sorted_notes) - len(recent)
         if older_count > 0:
             notes_section += f"\n\n{older_count} additional earlier note{'s' if older_count > 1 else ''} on file."

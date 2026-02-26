@@ -14,7 +14,9 @@ export default function PatientEditPage() {
   const updateMutation = useUpdatePatient();
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const isNotFound = isError && isAxiosError(error) &&
+  const isNotFound =
+    isError &&
+    isAxiosError(error) &&
     (error.response?.status === 404 || error.response?.status === 422);
 
   if (isLoading) {
@@ -60,14 +62,17 @@ export default function PatientEditPage() {
 
   const handleSubmit = (data: PatientFormData) => {
     setServerError(null);
-    updateMutation.mutate({ id: patient.id, data }, {
-      onSuccess: () => {
-        navigate(`/patients/${patient.id}`);
+    updateMutation.mutate(
+      { id: patient.id, data },
+      {
+        onSuccess: () => {
+          navigate(`/patients/${patient.id}`);
+        },
+        onError: (err) => {
+          setServerError(parseApiError(err));
+        },
       },
-      onError: (err) => {
-        setServerError(parseApiError(err));
-      },
-    });
+    );
   };
 
   return (

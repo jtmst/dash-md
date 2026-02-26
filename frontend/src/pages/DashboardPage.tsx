@@ -38,14 +38,46 @@ const STATUS_COLORS = {
 
 type StatKey = 'total' | PatientStatus;
 
-const STAT_CARDS: { key: StatKey; label: string; color: string; icon: typeof PeopleIcon; path: string }[] = [
+const STAT_CARDS: {
+  key: StatKey;
+  label: string;
+  color: string;
+  icon: typeof PeopleIcon;
+  path: string;
+}[] = [
   { key: 'total', label: 'Total Patients', color: '#1976d2', icon: PeopleIcon, path: '/patients' },
-  { key: 'active', label: 'Active', color: '#2e7d32', icon: CheckCircleIcon, path: '/patients?status=active' },
-  { key: 'critical', label: 'Critical', color: '#d32f2f', icon: ErrorIcon, path: '/patients?status=critical' },
-  { key: 'inactive', label: 'Inactive', color: '#ed6c02', icon: WarningIcon, path: '/patients?status=inactive' },
+  {
+    key: 'active',
+    label: 'Active',
+    color: '#2e7d32',
+    icon: CheckCircleIcon,
+    path: '/patients?status=active',
+  },
+  {
+    key: 'critical',
+    label: 'Critical',
+    color: '#d32f2f',
+    icon: ErrorIcon,
+    path: '/patients?status=critical',
+  },
+  {
+    key: 'inactive',
+    label: 'Inactive',
+    color: '#ed6c02',
+    icon: WarningIcon,
+    path: '/patients?status=inactive',
+  },
 ];
 
-function StatCard({ label, count, color, icon: Icon, isLoading, isError, onClick }: {
+function StatCard({
+  label,
+  count,
+  color,
+  icon: Icon,
+  isLoading,
+  isError,
+  onClick,
+}: {
   label: string;
   count: number | undefined;
   color: string;
@@ -58,14 +90,16 @@ function StatCard({ label, count, color, icon: Icon, isLoading, isError, onClick
     <Card variant="outlined" sx={{ height: '100%' }}>
       <CardActionArea onClick={onClick} sx={{ height: '100%' }}>
         <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box sx={{
-            bgcolor: `${color}14`,
-            borderRadius: 2,
-            p: 1.5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          <Box
+            sx={{
+              bgcolor: `${color}14`,
+              borderRadius: 2,
+              p: 1.5,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <Icon sx={{ fontSize: 32, color }} />
           </Box>
           <Box>
@@ -75,7 +109,9 @@ function StatCard({ label, count, color, icon: Icon, isLoading, isError, onClick
             {isLoading ? (
               <Skeleton width={48} height={40} />
             ) : isError ? (
-              <Typography variant="h4" color="error">--</Typography>
+              <Typography variant="h4" color="error">
+                --
+              </Typography>
             ) : (
               <Typography variant="h4" fontWeight={600}>
                 {count}
@@ -124,7 +160,11 @@ export default function DashboardPage() {
           severity="error"
           sx={{ mb: 2 }}
           action={
-            <Button color="inherit" size="small" onClick={() => statQueryList.forEach((q) => q.refetch())}>
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => statQueryList.forEach((q) => q.refetch())}
+            >
               Retry
             </Button>
           }
@@ -222,10 +262,7 @@ export default function DashboardPage() {
         </TableContainer>
       </Paper>
 
-      <Button
-        endIcon={<ArrowForwardIcon />}
-        onClick={() => navigate('/patients')}
-      >
+      <Button endIcon={<ArrowForwardIcon />} onClick={() => navigate('/patients')}>
         View All Patients
       </Button>
     </>

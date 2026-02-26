@@ -28,7 +28,10 @@ interface FormErrors {
 }
 
 function parseCommaSeparated(value: string): string[] {
-  return value.split(',').map((s) => s.trim()).filter(Boolean);
+  return value
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 function validate(fields: PatientFormData): FormErrors {
@@ -87,12 +90,8 @@ export default function PatientForm({
     last_visit_date: initialData?.last_visit_date ?? '',
   });
 
-  const [allergiesText, setAllergiesText] = useState(
-    initialData?.allergies?.join(', ') ?? '',
-  );
-  const [conditionsText, setConditionsText] = useState(
-    initialData?.conditions?.join(', ') ?? '',
-  );
+  const [allergiesText, setAllergiesText] = useState(initialData?.allergies?.join(', ') ?? '');
+  const [conditionsText, setConditionsText] = useState(initialData?.conditions?.join(', ') ?? '');
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -145,7 +144,14 @@ export default function PatientForm({
           <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
             Personal Information
           </Typography>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2, mt: 1 }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+              gap: 2,
+              mt: 1,
+            }}
+          >
             <TextField
               label="First Name"
               required
@@ -223,7 +229,14 @@ export default function PatientForm({
           <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600 }}>
             Medical Information
           </Typography>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2, mt: 1 }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+              gap: 2,
+              mt: 1,
+            }}
+          >
             <TextField
               label="Blood Type"
               select
@@ -232,7 +245,9 @@ export default function PatientForm({
             >
               <MenuItem value="">None</MenuItem>
               {BLOOD_TYPES.map((bt) => (
-                <MenuItem key={bt} value={bt}>{bt}</MenuItem>
+                <MenuItem key={bt} value={bt}>
+                  {bt}
+                </MenuItem>
               ))}
             </TextField>
             <TextField
@@ -242,7 +257,9 @@ export default function PatientForm({
               onChange={(e) => updateField('status', e.target.value as PatientStatus)}
             >
               {STATUSES.map((s) => (
-                <MenuItem key={s} value={s} sx={{ textTransform: 'capitalize' }}>{s}</MenuItem>
+                <MenuItem key={s} value={s} sx={{ textTransform: 'capitalize' }}>
+                  {s}
+                </MenuItem>
               ))}
             </TextField>
             <TextField

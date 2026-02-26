@@ -1,10 +1,22 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status as http_status
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    Query,
+    Response,
+    status as http_status,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
-from app.schemas.patient import PATIENT_STATUSES, PaginatedResponse, PatientCreate, PatientResponse
+from app.schemas.patient import (
+    PATIENT_STATUSES,
+    PaginatedResponse,
+    PatientCreate,
+    PatientResponse,
+)
 from app.services.patient_service import SORTABLE_COLUMNS
 from app.services import patient_service
 
@@ -33,11 +45,19 @@ async def list_patients(
         )
 
     patients, total = await patient_service.get_patients(
-        db, limit=limit, offset=offset, search=search, status=patient_status,
-        sort_by=sort_by, sort_order=sort_order,
+        db,
+        limit=limit,
+        offset=offset,
+        search=search,
+        status=patient_status,
+        sort_by=sort_by,
+        sort_order=sort_order,
     )
     return PaginatedResponse(
-        items=patients, total=total, limit=limit, offset=offset,
+        items=patients,
+        total=total,
+        limit=limit,
+        offset=offset,
     )
 
 
@@ -52,7 +72,9 @@ async def get_patient(
     return patient
 
 
-@router.post("", response_model=PatientResponse, status_code=http_status.HTTP_201_CREATED)
+@router.post(
+    "", response_model=PatientResponse, status_code=http_status.HTTP_201_CREATED
+)
 async def create_patient(
     data: PatientCreate,
     db: AsyncSession = Depends(get_db),

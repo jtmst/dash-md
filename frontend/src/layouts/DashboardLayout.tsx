@@ -41,9 +41,7 @@ export default function DashboardLayout() {
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
-    return (
-      location.pathname === path || location.pathname.startsWith(path + '/')
-    );
+    return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
   const drawerContent = (
@@ -51,14 +49,8 @@ export default function DashboardLayout() {
       <Toolbar />
       <List>
         {navItems.map(({ label, Icon, path }) => (
-          <ListItemButton
-            key={path}
-            selected={isActive(path)}
-            onClick={() => handleNavClick(path)}
-          >
-            <ListItemIcon
-              sx={{ color: isActive(path) ? 'primary.main' : undefined }}
-            >
+          <ListItemButton key={path} selected={isActive(path)} onClick={() => handleNavClick(path)}>
+            <ListItemIcon sx={{ color: isActive(path) ? 'primary.main' : undefined }}>
               <Icon />
             </ListItemIcon>
             <ListItemText primary={label} />
@@ -70,10 +62,7 @@ export default function DashboardLayout() {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (t) => t.zIndex.drawer + 1 }}
-      >
+      <AppBar position="fixed" sx={{ zIndex: (t) => t.zIndex.drawer + 1 }}>
         <Toolbar>
           {!isDesktop && (
             <IconButton
@@ -86,12 +75,7 @@ export default function DashboardLayout() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography
-            variant="h6"
-            noWrap
-            onClick={() => navigate('/')}
-            sx={{ cursor: 'pointer' }}
-          >
+          <Typography variant="h6" noWrap onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
             Dash MD
           </Typography>
         </Toolbar>

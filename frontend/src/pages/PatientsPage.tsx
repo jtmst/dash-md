@@ -229,9 +229,7 @@ export default function PatientsPage() {
                     <TableCell>
                       {patient.last_name}, {patient.first_name}
                     </TableCell>
-                    {!isMobile && (
-                      <TableCell>{formatDate(patient.date_of_birth)}</TableCell>
-                    )}
+                    {!isMobile && <TableCell>{formatDate(patient.date_of_birth)}</TableCell>}
                     <TableCell>
                       <Chip
                         label={patient.status}
@@ -249,9 +247,7 @@ export default function PatientsPage() {
             !isError && (
               <Box sx={{ py: 8, textAlign: 'center' }}>
                 <Typography color="text.secondary">
-                  {hasFilters
-                    ? 'No patients match your search'
-                    : 'No patients found'}
+                  {hasFilters ? 'No patients match your search' : 'No patients found'}
                 </Typography>
               </Box>
             )
