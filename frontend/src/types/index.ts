@@ -50,3 +50,16 @@ export interface PatientListParams {
   sort_by?: SortableColumn;
   sort_order?: 'asc' | 'desc';
 }
+
+export interface Note {
+  id: string;
+  patient_id: string;
+  content: string;
+  timestamp: string;
+  created_at: string;
+}
+
+export interface NoteFormData {
+  content: string;
+  timestamp: string;
+}

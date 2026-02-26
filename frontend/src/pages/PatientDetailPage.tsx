@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardHeader,
   Chip,
   CircularProgress,
   Dialog,
@@ -24,6 +25,8 @@ import { calculateAge, formatDate } from '../utils/format.ts';
 import { parseApiError } from '../utils/errors.ts';
 import type { Patient } from '../types/index.ts';
 import { isAxiosError } from 'axios';
+import NoteForm from '../components/NoteForm.tsx';
+import NotesList from '../components/NotesList.tsx';
 
 const STATUS_COLORS = {
   active: 'success',
@@ -275,6 +278,15 @@ export default function PatientDetailPage() {
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <RecordInfoCard patient={patient} />
+        </Grid>
+        <Grid size={{ xs: 12 }}>
+          <Card variant="outlined">
+            <CardHeader title="Clinical Notes" titleTypographyProps={{ variant: 'h6' }} />
+            <CardContent>
+              <NoteForm patientId={patient.id} />
+              <NotesList patientId={patient.id} />
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </>

@@ -4,11 +4,26 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 });
 
+const dateTimeFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
+});
+
 export function formatDate(dateString: string | null): string {
   if (!dateString) return '\u2014';
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return '\u2014';
   return dateFormatter.format(date);
+}
+
+export function formatDateTime(dateString: string | null): string {
+  if (!dateString) return '\u2014';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return '\u2014';
+  return dateTimeFormatter.format(date);
 }
 
 export function calculateAge(dateOfBirth: string): number | null {
