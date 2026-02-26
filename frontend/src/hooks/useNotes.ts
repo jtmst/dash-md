@@ -15,6 +15,7 @@ export function useCreateNote(patientId: string) {
     mutationFn: (data: NoteFormData) => createNote(patientId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes', patientId] });
+      queryClient.invalidateQueries({ queryKey: ['summary', patientId] });
     },
   });
 }
@@ -25,6 +26,7 @@ export function useDeleteNote(patientId: string) {
     mutationFn: (noteId: string) => deleteNote(patientId, noteId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes', patientId] });
+      queryClient.invalidateQueries({ queryKey: ['summary', patientId] });
     },
   });
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Note, NoteFormData, PaginatedResponse, Patient, PatientFormData, PatientListParams } from '../types/index.ts';
+import type { Note, NoteFormData, PaginatedResponse, Patient, PatientFormData, PatientListParams, PatientSummary } from '../types/index.ts';
 
 const client = axios.create({
   baseURL: '/api',
@@ -45,4 +45,8 @@ export function createNote(patientId: string, data: NoteFormData): Promise<Note>
 
 export function deleteNote(patientId: string, noteId: string): Promise<void> {
   return client.delete(`/patients/${patientId}/notes/${noteId}`);
+}
+
+export function getPatientSummary(patientId: string): Promise<PatientSummary> {
+  return client.get(`/patients/${patientId}/summary`);
 }

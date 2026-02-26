@@ -63,3 +63,8 @@ export interface NoteFormData {
   content: string;
   timestamp: string;
 }
+
+export interface PatientSummary {
+  summary: string;
+  mode: 'llm' | 'template';
+}

@@ -8,6 +8,7 @@ from app.config import settings
 from app.database import async_session
 from app.routers.notes import router as notes_router
 from app.routers.patients import router as patients_router
+from app.routers.summary import router as summary_router
 from app.seed import seed_notes, seed_patients
 
 
@@ -41,6 +42,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 app.include_router(patients_router)
 app.include_router(notes_router)
+app.include_router(summary_router)
 
 
 @app.get("/api/health")

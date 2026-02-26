@@ -27,6 +27,7 @@ import type { Patient } from '../types/index.ts';
 import { isAxiosError } from 'axios';
 import NoteForm from '../components/NoteForm.tsx';
 import NotesList from '../components/NotesList.tsx';
+import PatientSummary from '../components/PatientSummary.tsx';
 
 const STATUS_COLORS = {
   active: 'success',
@@ -268,6 +269,8 @@ export default function PatientDetailPage() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <PatientSummary patientId={patient.id} />
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>

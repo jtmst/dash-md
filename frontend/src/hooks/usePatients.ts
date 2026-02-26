@@ -31,8 +31,9 @@ export function useUpdatePatient() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: PatientFormData }) => updatePatient(id, data),
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['patients'] });
+      queryClient.invalidateQueries({ queryKey: ['summary', variables.id] });
     },
   });
 }
