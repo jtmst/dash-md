@@ -1,20 +1,6 @@
 import uuid
 
-
-async def create_test_patient(client, **overrides):
-    data = {
-        "first_name": "Test",
-        "last_name": "Patient",
-        "date_of_birth": "1990-01-15",
-        "gender": "Female",
-        "email": "test@example.com",
-        "phone": "555-0100",
-        "address": "123 Test St",
-        **overrides,
-    }
-    response = await client.post("/api/patients", json=data)
-    assert response.status_code == 201
-    return response.json()
+from tests.conftest import create_test_patient
 
 
 async def test_create_patient(client):
@@ -156,3 +142,44 @@ async def test_delete_patient(client):
 async def test_delete_patient_not_found(client):
     response = await client.delete(f"/api/patients/{uuid.uuid4()}")
     assert response.status_code == 404
+
+
+async def test_list_patients_sort_by_first_name(client):
+    await create_test_patient(client, first_name="Charlie", email="c@example.com")
+    await create_test_patient(client, first_name="Alice", email="a@example.com")
+    await create_test_patient(client, first_name="Bob", email="b@example.com")
+
+    response = await client.get(
+        "/api/patients", params={"sort_by": "first_name", "sort_order": "asc"}
+    )
+    assert response.status_code == 200
+    names = [p["first_name"] for p in response.json()["items"]]
+    assert names == ["Alice", "Bob", "Charlie"]
+
+
+async def test_list_patients_sort_desc(client):
+    await create_test_patient(client, first_name="Alice", email="a@example.com")
+    await create_test_patient(client, first_name="Charlie", email="c@example.com")
+
+    response = await client.get(
+        "/api/patients", params={"sort_by": "first_name", "sort_order": "desc"}
+    )
+    assert response.status_code == 200
+    names = [p["first_name"] for p in response.json()["items"]]
+    assert names == ["Charlie", "Alice"]
+
+
+async def test_list_patients_invalid_sort_column(client):
+    response = await client.get("/api/patients", params={"sort_by": "email"})
+    assert response.status_code == 400
+
+
+async def test_search_wildcard_escaping(client):
+    await create_test_patient(client, first_name="Test%User", email="pct@example.com")
+    await create_test_patient(client, first_name="TestXUser", email="x@example.com")
+
+    response = await client.get("/api/patients", params={"search": "t%u"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total"] == 1
+    assert data["items"][0]["first_name"] == "Test%User"

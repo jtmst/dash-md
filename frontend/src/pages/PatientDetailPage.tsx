@@ -28,12 +28,7 @@ import { isAxiosError } from 'axios';
 import NoteForm from '../components/NoteForm.tsx';
 import NotesList from '../components/NotesList.tsx';
 import PatientSummary from '../components/PatientSummary.tsx';
-
-const STATUS_COLORS = {
-  active: 'success',
-  inactive: 'warning',
-  critical: 'error',
-} as const;
+import { STATUS_COLORS } from '../utils/constants.ts';
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (

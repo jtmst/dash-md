@@ -1,23 +1,13 @@
 import uuid
+from unittest.mock import patch
+
+from tests.conftest import create_test_patient
 
 
-async def create_test_patient(client, **overrides):
-    data = {
-        "first_name": "Test",
-        "last_name": "Patient",
-        "date_of_birth": "1990-01-15",
-        "gender": "Female",
-        "email": "test@example.com",
-        "phone": "555-0100",
-        "address": "123 Test St",
-        **overrides,
-    }
-    response = await client.post("/api/patients", json=data)
-    assert response.status_code == 201
-    return response.json()
-
-
-async def test_summary_template_mode(client):
+@patch("app.services.summary_service.settings")
+async def test_summary_template_mode(mock_settings, client):
+    mock_settings.SUMMARY_MODE = "template"
+    mock_settings.OPENROUTER_API_KEY = ""
     patient = await create_test_patient(client)
 
     response = await client.get(f"/api/patients/{patient['id']}/summary")
@@ -28,7 +18,10 @@ async def test_summary_template_mode(client):
     assert "Patient" in data["summary"]
 
 
-async def test_summary_with_notes(client):
+@patch("app.services.summary_service.settings")
+async def test_summary_with_notes(mock_settings, client):
+    mock_settings.SUMMARY_MODE = "template"
+    mock_settings.OPENROUTER_API_KEY = ""
     patient = await create_test_patient(client)
     pid = patient["id"]
 

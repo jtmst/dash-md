@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Alert,
@@ -27,26 +27,11 @@ import {
 import type { SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import { useDebouncedValue } from '../hooks/useDebouncedValue.ts';
 import { usePatients } from '../hooks/usePatients.ts';
 import { formatDate } from '../utils/format.ts';
+import { STATUS_COLORS } from '../utils/constants.ts';
 import type { PatientListParams, PatientStatus, SortableColumn } from '../types/index.ts';
-
-const STATUS_COLORS = {
-  active: 'success',
-  inactive: 'warning',
-  critical: 'error',
-} as const;
-
-function useDebouncedValue<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debounced;
-}
 
 export default function PatientsPage() {
   const navigate = useNavigate();
@@ -222,9 +207,17 @@ export default function PatientsPage() {
                   <TableRow
                     key={patient.id}
                     hover
+                    role="link"
+                    tabIndex={0}
                     aria-label={`${patient.last_name}, ${patient.first_name}`}
                     sx={{ cursor: 'pointer' }}
                     onClick={() => navigate(`/patients/${patient.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate(`/patients/${patient.id}`);
+                      }
+                    }}
                   >
                     <TableCell>
                       {patient.last_name}, {patient.first_name}

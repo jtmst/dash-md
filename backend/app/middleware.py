@@ -13,7 +13,14 @@ logger = logging.getLogger("dash_md.access")
 
 class RequestLoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next) -> Response:
-        request_id = request.headers.get("x-request-id") or str(uuid.uuid4())
+        raw_id = request.headers.get("x-request-id")
+        if raw_id:
+            try:
+                request_id = str(uuid.UUID(raw_id))
+            except ValueError:
+                request_id = str(uuid.uuid4())
+        else:
+            request_id = str(uuid.uuid4())
         request.state.request_id = request_id
 
         start = time.perf_counter()

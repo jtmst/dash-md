@@ -63,7 +63,7 @@ export default function NoteForm({ patientId }: { patientId: string }) {
         }}
         error={!!contentError}
         helperText={contentError}
-        inputProps={{ maxLength: 10000 }}
+        slotProps={{ htmlInput: { maxLength: 10000 } }}
         sx={{ mb: 2 }}
       />
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>

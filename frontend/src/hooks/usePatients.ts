@@ -10,14 +10,14 @@ import type { PatientFormData, PatientListParams } from '../types/index.ts';
 
 export function usePatients(params: PatientListParams) {
   return useQuery({
-    queryKey: ['patients', params],
+    queryKey: ['patients', 'list', params],
     queryFn: () => getPatients(params),
   });
 }
 
 export function usePatient(id: string | undefined) {
   return useQuery({
-    queryKey: ['patients', id],
+    queryKey: ['patients', 'detail', id],
     queryFn: () => getPatient(id!),
     enabled: !!id,
   });

@@ -28,42 +28,43 @@ import AddIcon from '@mui/icons-material/Add';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { usePatients } from '../hooks/usePatients.ts';
 import { formatDate } from '../utils/format.ts';
+import { STATUS_COLORS } from '../utils/constants.ts';
 import type { PatientStatus } from '../types/index.ts';
-
-const STATUS_COLORS = {
-  active: 'success',
-  inactive: 'warning',
-  critical: 'error',
-} as const;
 
 type StatKey = 'total' | PatientStatus;
 
 const STAT_CARDS: {
   key: StatKey;
   label: string;
-  color: string;
+  colorKey: 'primary' | 'success' | 'error' | 'warning';
   icon: typeof PeopleIcon;
   path: string;
 }[] = [
-  { key: 'total', label: 'Total Patients', color: '#1976d2', icon: PeopleIcon, path: '/patients' },
+  {
+    key: 'total',
+    label: 'Total Patients',
+    colorKey: 'primary',
+    icon: PeopleIcon,
+    path: '/patients',
+  },
   {
     key: 'active',
     label: 'Active',
-    color: '#2e7d32',
+    colorKey: 'success',
     icon: CheckCircleIcon,
     path: '/patients?status=active',
   },
   {
     key: 'critical',
     label: 'Critical',
-    color: '#d32f2f',
+    colorKey: 'error',
     icon: ErrorIcon,
     path: '/patients?status=critical',
   },
   {
     key: 'inactive',
     label: 'Inactive',
-    color: '#ed6c02',
+    colorKey: 'warning',
     icon: WarningIcon,
     path: '/patients?status=inactive',
   },
@@ -72,7 +73,7 @@ const STAT_CARDS: {
 function StatCard({
   label,
   count,
-  color,
+  colorKey,
   icon: Icon,
   isLoading,
   isError,
@@ -80,12 +81,15 @@ function StatCard({
 }: {
   label: string;
   count: number | undefined;
-  color: string;
+  colorKey: 'primary' | 'success' | 'error' | 'warning';
   icon: typeof PeopleIcon;
   isLoading: boolean;
   isError: boolean;
   onClick: () => void;
 }) {
+  const theme = useTheme();
+  const color = theme.palette[colorKey].main;
+
   return (
     <Card variant="outlined" sx={{ height: '100%' }}>
       <CardActionArea onClick={onClick} sx={{ height: '100%' }}>
@@ -181,7 +185,7 @@ export default function DashboardPage() {
               <StatCard
                 label={card.label}
                 count={query.data?.total}
-                color={card.color}
+                colorKey={card.colorKey}
                 icon={card.icon}
                 isLoading={query.isLoading}
                 isError={query.isError}
@@ -233,8 +237,16 @@ export default function DashboardPage() {
                   <TableRow
                     key={patient.id}
                     hover
+                    role="link"
+                    tabIndex={0}
                     sx={{ cursor: 'pointer' }}
                     onClick={() => navigate(`/patients/${patient.id}`)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        navigate(`/patients/${patient.id}`);
+                      }
+                    }}
                   >
                     <TableCell>
                       {patient.last_name}, {patient.first_name}

@@ -1,19 +1,6 @@
 import uuid
 
-
-async def create_test_patient(client):
-    data = {
-        "first_name": "Test",
-        "last_name": "Patient",
-        "date_of_birth": "1990-01-15",
-        "gender": "Female",
-        "email": "test@example.com",
-        "phone": "555-0100",
-        "address": "123 Test St",
-    }
-    response = await client.post("/api/patients", json=data)
-    assert response.status_code == 201
-    return response.json()
+from tests.conftest import create_test_patient
 
 
 async def create_test_note(client, patient_id):

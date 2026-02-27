@@ -122,8 +122,8 @@ Falls back to template mode automatically on any failure (missing key, timeout, 
 ### CI/CD Pipeline
 
 GitHub Actions workflow with two parallel jobs:
-- **Backend**: pytest integration tests against a PostgreSQL service container
-- **Frontend**: TypeScript type checking and ESLint
+- **Backend**: Ruff linting and format checking, pytest integration tests against a PostgreSQL service container
+- **Frontend**: TypeScript type checking, ESLint, Prettier format checking
 
 ### Hot Reloading
 
@@ -138,8 +138,11 @@ Both frontend (Vite) and backend (uvicorn `--reload`) support hot reloading in D
 docker compose up -d postgres
 cd backend && pip install -r requirements.txt && pytest tests -v
 
-# Frontend type checking and linting
-cd frontend && npx tsc --noEmit && npx eslint src/
+# Backend linting
+cd backend && ruff check . && ruff format --check .
+
+# Frontend type checking, linting, and formatting
+cd frontend && npx tsc -b && npx eslint src/ && npx prettier --check 'src/**/*.{ts,tsx}'
 ```
 
 ### Database Migrations
@@ -188,7 +191,7 @@ This application handles synthetic patient data, but is designed with real PHI/P
 - LLM data minimization: only clinically relevant fields sent, capped at 5 notes / 500 chars each
 
 **Out of scope (production requirements):**
-- Authentication and authorization (RBAC per user role)
+- Authentication and authorization
 - Encryption at rest for the database
 - Audit logging for data access and modifications
 - Rate limiting on API endpoints

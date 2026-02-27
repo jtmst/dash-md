@@ -1,6 +1,7 @@
 import logging
-from datetime import date
+from datetime import date, datetime
 
+import openai
 from openai import AsyncOpenAI
 
 from app.config import settings
@@ -32,7 +33,7 @@ def _calculate_age(dob: date) -> int:
     return age
 
 
-def _format_date(dt) -> str:
+def _format_date(dt: datetime) -> str:
     return dt.strftime("%B %d, %Y")
 
 
@@ -145,10 +146,10 @@ async def generate_summary(patient: Patient, notes: list[Note]) -> PatientSummar
         try:
             summary_text = await generate_llm_summary(patient, notes)
             return PatientSummary(summary=summary_text, mode="llm")
-        except Exception:
+        except (openai.APIError, openai.APITimeoutError, ValueError) as e:
             logger.warning(
-                "LLM summary generation failed, falling back to template",
-                exc_info=True,
+                "LLM summary generation failed (%s), falling back to template",
+                type(e).__name__,
             )
 
     summary_text = generate_template_summary(patient, notes)
