@@ -136,7 +136,7 @@ Both frontend (Vite) and backend (uvicorn `--reload`) support hot reloading in D
 ```bash
 # Backend integration tests (requires running postgres)
 docker compose up -d postgres
-cd backend && pip install -r requirements.txt && pytest tests -v
+cd backend && pip install -r requirements-dev.txt && pytest tests -v
 
 # Backend linting
 cd backend && ruff check . && ruff format --check .
