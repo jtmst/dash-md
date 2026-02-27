@@ -15,6 +15,15 @@ docker compose up --build
 
 The database is created, migrated, and seeded automatically on first startup (20 patients, 16 clinical notes).
 
+## Screenshots
+
+<img width="1244" height="499" alt="image" src="https://github.com/user-attachments/assets/cbb94d85-ab0e-4cff-ae02-949dccc6b73f" />
+
+<img width="1244" height="596" alt="image" src="https://github.com/user-attachments/assets/50b77c22-2eb8-40fa-93c6-0c754618f028" />
+
+<img width="1244" height="596" alt="image" src="https://github.com/user-attachments/assets/e2168690-2303-4749-9010-2595ba0e5c2f" />
+
+
 ## Architecture
 
 | Layer | Technology | Notes |
